@@ -1,0 +1,24 @@
+FROM php:8.2-cli
+
+# Composerのインストール
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+# 必要な拡張機能のインストール
+RUN apt-get update && apt-get install -y \
+    libzip-dev \
+    unzip \
+    git \
+    && docker-php-ext-install pdo_mysql zip
+
+WORKDIR /app
+
+COPY composer.json ./
+
+# Composer依存関係のインストール (本番環境では --no-dev を追加)
+RUN composer install --no-interaction --prefer-dist --optimize-autoloader
+
+COPY . /app
+
+#CMD ["php", "server.php"]
+# composer installがうまくいかない場合、下記でコンテナ作成→手動インストールする
+CMD ["tail", "-f", "/dev/null"]

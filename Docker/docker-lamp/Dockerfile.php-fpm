@@ -1,0 +1,23 @@
+FROM php:8.2-fpm
+
+# Composerのインストール
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+# 必要な拡張機能のインストール
+RUN apt-get update && apt-get install -y \
+    libzip-dev \
+    unzip \
+    git \
+    && docker-php-ext-install pdo_mysql zip
+
+WORKDIR /var/www
+
+COPY composer.json ./
+
+# Composer依存関係のインストール (本番環境では --no-dev を追加)
+RUN composer install --no-interaction --prefer-dist --optimize-autoloader
+
+COPY . /var/www
+
+# PHP-FPMの設定を調整する場合 (任意)
+# COPY docker/php/php.ini /usr/local/etc/php/conf.d/zz-custom.ini

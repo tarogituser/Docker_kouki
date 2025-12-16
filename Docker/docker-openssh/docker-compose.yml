@@ -1,0 +1,33 @@
+version: '3.7'
+
+services:
+  openssh-server:
+    image: linuxserver/openssh-server:version-9.6_p1-r0
+    container_name: openssh-server
+    hostname: openssh-server #optional
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Tokyo
+      - PASSWORD_ACCESS=true 
+      - USER_PASSWORD=p@ssword
+      - USER_NAME=ssh_test_user
+      - LOG_STDOUT= #optional
+    ports:
+      - 2222:2222
+    restart: unless-stopped
+
+  mng:
+    build: ./mng
+    volumes:
+      - ./.ssh/test_rsa:/root/.ssh/test_rsa
+      - ./.ssh/test_rsa.pub:/root/.ssh/authorized_keys
+    ports:
+      - 10022:22
+    
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+    db_data: {}

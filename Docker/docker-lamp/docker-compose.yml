@@ -1,0 +1,103 @@
+version: '3.7'
+
+services:
+  mysql:
+    build: ./mysql
+    volumes:
+      - db_data:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 'p@ssword'
+
+  phpmyadmin:
+    depends_on:
+      - mysql
+    image: phpmyadmin/phpmyadmin
+    environment:
+      PMA_HOST: mysql
+    restart: always
+    ports:
+      - "8080:80"
+
+  php-apache:
+    build: ./php
+    volumes:
+      - ./htdocs:/var/www/html
+      - ./.ssh/test_rsa:/root/.ssh/test_rsa
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - mysql
+
+  storage:
+    build: ./storage
+    volumes:
+      - ./storage:/storage
+      - ./.ssh/test_rsa.pub:/root/.ssh/authorized_keys
+    ports:
+      - '10022:22'
+
+  openssh-server:
+    image: linuxserver/openssh-server:version-9.6_p1-r0
+    container_name: openssh-server
+    hostname: openssh-server #optional
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Tokyo
+      - PASSWORD_ACCESS=true 
+      - USER_PASSWORD=p@ssword
+      - USER_NAME=test_user
+      - LOG_STDOUT= #optional
+    ports:
+      - 2222:2222
+    restart: unless-stopped
+
+  memcached:
+    build: ./memcached
+    container_name: memcached_cache
+    user: root
+    command: ["memcached", "-u", "root"]
+    ports:
+      - "11211:11211"
+
+  nginx:
+    image: nginx:stable-alpine
+    ports:
+      - "81:81" # Webアクセス用ポート
+    volumes:
+      - .:/var/www/html # プロジェクトファイルをマウント
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf # Nginx設定ファイル
+    depends_on:
+      - php-fpm
+    networks:
+      - app-network
+
+  php-fpm:
+    build:
+      context: .
+      dockerfile: Dockerfile.php-fpm
+    volumes:
+      - .:/var/www/html
+    networks:
+      - app-network
+
+  websocket-server:
+    build:
+      context: .
+      dockerfile: Dockerfile.websocket-server
+    ports:
+      - "8081:8081" # WebSocketサーバー用ポート
+    volumes:
+      - .:/app
+    networks:
+      - app-network
+    restart: always # コンテナがクラッシュした場合に自動再起動
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+    db_data: {}
