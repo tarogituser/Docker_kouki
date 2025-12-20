@@ -62,25 +62,13 @@ use sosyage;
 CREATE TABLE IF NOT EXISTS items (
     item_id INT PRIMARY KEY,
     item_name VARCHAR(255) CHARACTER SET utf8mb4,
-    item_count INT
+    item_count INT,
+    weight INT DEFAULT 1
 );
 
-insert into items (item_id, item_name, item_count) values
-(1, '神アイテム', 1),
-(2, '激レアアイテム', 3),
-(3, 'レアアイテム', 6),
-(4, '普通のアイテム', 12),
-(5, 'ゴミアイテム', 20);
-
-CREATE TABLE IF NOT EXISTS gacha_lineup (
-    gacha_id INT,
-    item_id INT PRIMARY KEY,
-    weight INT
-);
-
-insert into gacha_lineup (gacha_id, item_id, weight) values
-(1, 1, 10),
-(1, 2, 90),
-(1, 3, 200),
-(1, 4, 300),
-(1, 5, 400);
+insert into items (item_id, item_name, item_count, weight) values
+(1, '神アイテム', 1, 1),
+(2, '激レアアイテム', 3, 3),
+(3, 'レアアイテム', 6, 10),
+(4, '普通のアイテム', 12, 30),
+(5, 'ゴミアイテム', 20, 56);

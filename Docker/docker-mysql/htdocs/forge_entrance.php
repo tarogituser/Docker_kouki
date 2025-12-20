@@ -33,7 +33,11 @@ require 'common.php';
           </a>
       </li>
     <?php endforeach; ?>
-  </ul>
+  </ul><br>
+
+  <form action="menu.php" method="post">
+        <button type="submit" name="gacha_start">メニュー画面</button>
+  </form>
 
 </body>
 </html>

@@ -1,17 +1,10 @@
 <?php
-$host = 'mysql';
-// mysql接続用のユーザー
-$username = 'data_user';
-$password = 'data';
-$database = 'sosyage';
+require 'common.php';
 
 try
 {
-    $pdo = new PDO("mysql:host=$host;dbname=$database;charset=utf8", $username, $password);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $pdo->exec("set names utf8");  // UTF-8エンコーディングを設定
     // アイテム情報の取得
-    $stmt = $pdo->query("SELECT item_id, item_name, weight FROM items JOIN gacha_lineup ON items.item_id = gacha_lineup.item_id");
+    $stmt = $pdo->query("SELECT item_id, item_name, weight FROM items");
     // 取得したデータをセッションに保存
     $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
@@ -21,29 +14,40 @@ catch(PDOException $e)
     exit();
 }
 
-#アイテムの抽選
-function drawItem($items)
-{
-    #ガチャの重みの合計
-    $totalWeight = 0;
-    foreach ($items as $item){
-        $totalWeight += $item['weight'];
-    }
+#重み合計
+$totalWeight = array_sum(array_column($items, 'weight'));
 
-    $hit = rand(1, $totalWeight);
+#アイテムの抽選
+function drawItem($items, $totalWeight)
+{
+    $hit = mt_rand(1, $totalWeight);
     $currentWeight = 0;
     foreach ($items as $item) {
         $currentWeight += $item['weight'];
         if ($hit <= $currentWeight)
             return $item;
     }
+
+    return $items[array_key_last($items)];
 }
 
+//10連ガチャ
 $results = [];
+
+$pdo->beginTransaction();
+
 for ($i = 0; $i < 10; $i++){
-    $results[] = drawItem($items);
+    $item = drawItem($items, $totalWeight);
+    $results[] = $item['item_name'];
+
+    // 所持数を増やす
+    $update = $pdo->prepare(
+        "UPDATE items SET item_count = item_count + 1 WHERE item_id = ?"
+    );
+    $update->execute([$item['item_id']]);
 }
 
+$pdo->commit();
 ?>
 
 <!DOCTYPE html>
@@ -51,15 +55,15 @@ for ($i = 0; $i < 10; $i++){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ガチャ結果</title>
+    <title>10連ガチャ結果</title>
 </head>
 <body>
-    <h1>ガチャ結果</h1>
-    <ul>
-        <?php foreach ($results as $result): ?>
-            <li>アイテムID: <?= htmlspecialchars($result['item_id']); ?>, アイテム名: <?= htmlspecialchars($result['item_name']); ?></li>
-        <?php endforeach; ?>
-    </ul>
+    <h1>🎰 10連ガチャ結果 🎰</h1>
+    <?php foreach ($results as $i => $name): ?>
+            <div class="result">
+                <?= $i + 1 ?>回目：<?= htmlspecialchars($name, ENT_QUOTES, 'UTF-8') ?>
+            </div>
+    <?php endforeach; ?>
     <a href="gacha.html">もう一度ガチャを引く</a>
 </body>
 </html>
