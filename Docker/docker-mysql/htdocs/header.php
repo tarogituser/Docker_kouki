@@ -37,3 +37,17 @@ if (session_status() === PHP_SESSION_NONE) {
         a { color: #007bff; text-decoration: none; }
         a:hover { text-decoration: underline; }
     </style>
+</head>
+<body>
+    <div class="header-info">
+        <?php if (isset($_SESSION['user_id'])): ?>
+            ログイン中: <strong><?php echo htmlspecialchars($_SESSION['user_name'], ENT_QUOTES, 'UTF-8'); ?></strong> (ID: <?php echo htmlspecialchars($_SESSION['user_id'], ENT_QUOTES, 'UTF-8'); ?>)
+            <a href="/menu.php" style="margin-left: 15px;">メニューへ戻る</a>
+            <form action="/select_user.php" method="post" style="display: inline; margin-left: 15px;">
+                <button type="submit" name="logout">ログアウト</button>
+            </form>
+        <?php else: ?>
+            ログインしていません</a>
+        <?php endif; ?>
+    </div>
+    <div class="container"></div>
