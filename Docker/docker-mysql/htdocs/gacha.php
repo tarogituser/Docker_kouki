@@ -1,3 +1,9 @@
+<?php
+require 'common.php';
+$title = "10連ガチャ";
+require_once 'header.php';
+?>
+
 <!DOCTYPE html>
 <html lang="ja">
   <head>

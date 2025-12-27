@@ -1,5 +1,6 @@
 <?php
 require 'common.php';
+require_once 'header.php';
 
 $target_id = $_GET['target_item_id'];
 $base_id = $_GET['base_item_id'];

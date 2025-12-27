@@ -11,6 +11,9 @@ require 'common.php';
       echo "データベースエラー: " . $e->getMessage();
       exit();
     }
+
+$title = "アイテム強化画面";
+require_once 'header.php';
 ?>
 
 <!DOCTYPE html>

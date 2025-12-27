@@ -13,6 +13,9 @@ require 'common.php';
       echo "データベースエラー: " . $e->getMessage();
       exit();
     }
+
+$title = "ベースアイテム選択";
+require_once 'header.php';
 ?>
 
 <!DOCTYPE html>
@@ -38,6 +41,11 @@ require 'common.php';
             </a>
         </li>
     <?php endforeach; ?>
-  </ul>
+  </ul><br>
+
+  <form action="forge_entrance.php" method="post">
+        <button type="submit" name="back">戻る</button>
+  </form>
+
 </body>
 </html>

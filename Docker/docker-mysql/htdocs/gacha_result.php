@@ -14,6 +14,9 @@ catch(PDOException $e)
     exit();
 }
 
+$title = "10連ガチャ結果";
+require_once 'header.php';
+
 #重み合計
 $totalWeight = array_sum(array_column($items, 'weight'));
 

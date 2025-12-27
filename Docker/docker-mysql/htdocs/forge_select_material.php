@@ -14,6 +14,9 @@ require 'common.php';
       echo "データベースエラー: " . $e->getMessage();
       exit();
     }
+
+$title = "素材選択";
+require_once 'header.php';
 ?>
 
 <!DOCTYPE html>
@@ -40,6 +43,5 @@ require 'common.php';
         </li>
     <?php endforeach; ?>
   </ul>
-
 </body>
 </html>
