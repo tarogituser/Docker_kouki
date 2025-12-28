@@ -137,7 +137,7 @@ $pdo->commit();
             <?= $i + 1 ?>回目：<?= htmlspecialchars($item['name'], ENT_QUOTES, 'UTF-8') ?>
         </div>
     <?php endforeach; ?><br>
-    <a href="gacha.html">もう一度ガチャを引く</a><br>
+    <a href="gacha.php">もう一度ガチャを引く</a><br>
     <a href="menu.php">メニュー画面</a>
 </body>
 </html>

@@ -67,8 +67,8 @@ CREATE TABLE IF NOT EXISTS items (
 );
 
 insert into items (item_id, item_name, item_count, weight) values
-(1, '神アイテム', 1, 1),
-(2, '激レアアイテム', 3, 3),
-(3, 'レアアイテム', 6, 10),
+(1, '神アイテム', 1, 5),
+(2, '激レアアイテム', 3, 10),
+(3, 'レアアイテム', 6, 25),
 (4, '普通のアイテム', 12, 30),
 (5, 'ゴミアイテム', 20, 56);
