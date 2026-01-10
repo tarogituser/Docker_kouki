@@ -9,8 +9,44 @@ if (isset($_POST['create_user'])) {
     $user_name = trim($_POST['user_name']);
 
     if ($user_name !== "") {
+      // すでに同じ user_name が存在するかチェック
+      $check = $pdo->prepare("SELECT user_id FROM users WHERE user_name = :name");
+      $check->execute([':name' => $user_name]);
+      $existingUser = $check->fetch(PDO::FETCH_ASSOC);
+
+      // 既存ユーザー
+      if ($existingUser){
         $_SESSION['user_name'] = $user_name;
-        $message = "ユーザー「{$user_name}」を作成しました";
+        $_SESSION['user_id'] = $existingUser['user_id'];
+      }
+      // 新規ユーザー
+      else{
+        // users テーブルにユーザー作成
+        $stmt = $pdo->prepare("INSERT INTO users (user_name) VALUES (:name)");
+        $stmt->execute([':name' => $user_name]);
+
+        // 作成された user_id を取得
+        $userId = $pdo->lastInsertId();
+
+        $_SESSION['user_name'] = $user_name;
+        $_SESSION['user_id'] = $userId;
+
+        // ユーザー専用 items テーブル名
+        $tableName = "items_user_" . intval($userId);
+
+        // 空の items テーブルを作成
+        $sql = "
+        CREATE TABLE $tableName (
+            item_id INT PRIMARY KEY,
+            item_name VARCHAR(255) CHARACTER SET utf8mb4,
+            item_count INT DEFAULT 0,
+            weight INT DEFAULT 1
+        );
+        ";
+        $pdo->exec($sql);
+
+        $message = "新規ユーザー「{$user_name}」を作成しました";
+      }
     }
 }
 

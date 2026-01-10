@@ -2,8 +2,13 @@
 require 'common.php';
     try
     {
+      // 作成された user_id を取得
+      $userId = $_SESSION['user_id'];
+      // ユーザー専用 items テーブル名
+      $tableName = "items_user_" . intval($userId);
+
       // データの取得
-      $stmt = $pdo->query("SELECT * FROM items WHERE item_count > 0");
+      $stmt = $pdo->query("SELECT * FROM $tableName WHERE item_count > 0");
       $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
     catch(PDOException $e)

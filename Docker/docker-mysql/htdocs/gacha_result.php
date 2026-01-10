@@ -36,6 +36,10 @@ function drawItem($items, $totalWeight)
 
 //10連ガチャ
 $results = [];
+// 作成された user_id を取得
+$userId = $_SESSION['user_id'];
+// ユーザー専用 items テーブル名
+$tableName = "items_user_" . intval($userId);
 
 $pdo->beginTransaction();
 
@@ -57,7 +61,7 @@ for ($i = 0; $i < 10; $i++){
 
     // 所持数を増やす
     $update = $pdo->prepare(
-        "UPDATE items SET item_count = item_count + 1 WHERE item_id = ?"
+        "UPDATE $tableName SET item_count = item_count + 1 WHERE item_id = ?"
     );
     $update->execute([$item['item_id']]);
 }

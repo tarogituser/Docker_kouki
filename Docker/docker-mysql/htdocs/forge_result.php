@@ -2,6 +2,11 @@
 require 'common.php';
 require_once 'header.php';
 
+// 作成された user_id を取得
+$userId = $_SESSION['user_id'];
+// ユーザー専用 items テーブル名
+$tableName = "items_user_" . intval($userId);
+
 $target_id = $_GET['target_item_id'];
 $base_id = $_GET['base_item_id'];
 $material_id = $_GET['material_item_id'];
@@ -9,7 +14,7 @@ $material_id = $_GET['material_item_id'];
 $pdo->beginTransaction();
 
 //所持数チェック
-$stmt = $pdo->prepare("SELECT * FROM items WHERE item_id = ?");
+$stmt = $pdo->prepare("SELECT * FROM $tableName WHERE item_id = ?");
 $stmt->execute([$material_id]);
 $material = $stmt->fetch();
 
@@ -36,13 +41,13 @@ $rand = random_int(1, 100);
 $success = $rand <= $success_rate;
 
 // 素材消費
-$pdo->prepare("UPDATE items SET item_count = item_count - 1 WHERE item_id = ?")
+$pdo->prepare("UPDATE $tableName SET item_count = item_count - 1 WHERE item_id = ?")
 ->execute([$material_id]);
 
 if ($success) {
     // ベース強化（名前に +1）
     $pdo->prepare(
-        "UPDATE items SET item_name = CONCAT(item_name, '+1') WHERE item_id = ?"
+        "UPDATE $tableName SET item_name = CONCAT(item_name, '+1') WHERE item_id = ?"
     )->execute([$base_id]);
 }
 

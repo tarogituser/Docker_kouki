@@ -2,10 +2,15 @@
 require 'common.php';
     try
     {
+      // 作成された user_id を取得
+      $userId = $_SESSION['user_id'];
+      // ユーザー専用 items テーブル名
+      $tableName = "items_user_" . intval($userId);
+
       $target_id = $_GET['target_item_id'];
 
       // データの取得
-      $items = $pdo->prepare("SELECT * FROM items WHERE item_count > 0 AND item_id != ?");
+      $items = $pdo->prepare("SELECT * FROM $tableName WHERE item_count > 0 AND item_id != ?");
       $items->execute([$target_id]);
     }
     catch(PDOException $e)
