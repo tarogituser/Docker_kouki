@@ -10,6 +10,9 @@ require 'common.php';
       // データの取得
       $stmt = $pdo->query("SELECT * FROM $tableName WHERE item_count > 0");
       $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
+      $count = $stmt->fetchColumn();
+      //アイテムが空かチェック
+      $isEmpty = $count == 0;
     }
     catch(PDOException $e)
     {
@@ -30,22 +33,32 @@ require_once 'header.php';
 <body>
   <h1>強化アイテムを選択</h1>
 
-  <p style="color: gray;">強化に使用するアイテムを選択してください</p>
+  <?php if (!$isEmpty): ?>
+    <p style="color: gray;">強化に使用するアイテムを選択してください</p>
 
-  <ul>
-    <?php foreach($items as $item): ?>
-      <li>
-          <a href="forge_select.php?target_item_id=<?= $item['item_id'] ?>">
-              <?= htmlspecialchars($item['item_name'], ENT_QUOTES) ?>
-              （所持数：<?= $item['item_count'] ?>）
-          </a>
-      </li>
-    <?php endforeach; ?>
-  </ul><br>
+    <ul>
+      <?php foreach($items as $item): ?>
+        <li>
+            <a href="forge_select.php?target_item_id=<?= $item['item_id'] ?>">
+                <?= htmlspecialchars($item['item_name'], ENT_QUOTES) ?>
+                （所持数：<?= $item['item_count'] ?>）
+            </a>
+        </li>
+      <?php endforeach; ?>
+    </ul><br>
 
-  <form action="menu.php" method="post">
-        <button type="submit" name="gacha_start">メニュー画面</button>
-  </form>
+    <form action="menu.php" method="post">
+          <button type="submit" name="back">メニュー画面</button>
+    </form>
+  
+  <?php else: ?>
+    <p style="color: gray;">アイテムがありません。</p><br>
+
+    <form action="menu.php" method="post">
+          <button type="submit" name="back">メニュー画面</button>
+    </form>
+
+  <?php endif; ?>
 
 </body>
 </html>

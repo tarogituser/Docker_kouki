@@ -30,7 +30,7 @@ insert into items (item_id, item_name, weight) values
 (4, '普通のアイテム', 30),
 (5, 'ゴミアイテム', 56);
 
-CREATE TABLE IF NOT EXISTS $items_user_0 (
+CREATE TABLE $items_user_0 (
             item_id INT PRIMARY KEY,
             item_name VARCHAR(255) CHARACTER SET utf8mb4,
             item_count INT DEFAULT 0,
