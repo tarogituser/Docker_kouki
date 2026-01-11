@@ -10,9 +10,6 @@ require 'common.php';
       // データの取得
       $stmt = $pdo->query("SELECT * FROM $tableName WHERE item_count > 0");
       $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
-      $count = $stmt->fetchColumn();
-      //アイテムが空かチェック
-      $isEmpty = $count == 0;
     }
     catch(PDOException $e)
     {
@@ -33,7 +30,7 @@ require_once 'header.php';
 <body>
   <h1>強化アイテムを選択</h1>
 
-  <?php if (!$isEmpty): ?>
+  <?php if (count($items) > 0): ?>
     <p style="color: gray;">強化に使用するアイテムを選択してください</p>
 
     <ul>

@@ -36,6 +36,7 @@ function drawItem($items, $totalWeight)
 
 //10連ガチャ
 $results = [];
+
 // 作成された user_id を取得
 $userId = $_SESSION['user_id'];
 // ユーザー専用 items テーブル名
@@ -58,6 +59,17 @@ for ($i = 0; $i < 10; $i++){
         'name' => $item['item_name'],
         'rarity' => $rarity
     ];
+
+    // すでに同じ item が存在するかチェック
+    $check = $pdo->prepare("SELECT item_id, item_name FROM $tableName WHERE item_name = :name");
+    $check->execute([':name' => $item['item_name']]);
+    $existingItem = $check->fetch(PDO::FETCH_ASSOC);
+
+    if (!$existingItem){
+        // テーブルにアイテム追加
+        $stmt = $pdo->prepare("INSERT INTO $tableName (item_id, item_name) VALUES (:id, :name)");
+        $stmt->execute([':id' => $item['item_id'], ':name' => $item['item_name']]);
+    }
 
     // 所持数を増やす
     $update = $pdo->prepare(

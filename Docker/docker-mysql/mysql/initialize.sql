@@ -10,6 +10,7 @@ CREATE DATABASE IF NOT EXISTS sosyage;
 use sosyage;
 
 DROP TABLE users;
+DELETE FROM users;
 CREATE TABLE IF NOT EXISTS users (
     user_id INT AUTO_INCREMENT PRIMARY KEY,
     user_name VARCHAR(255) NOT NULL UNIQUE,
@@ -25,13 +26,14 @@ CREATE TABLE IF NOT EXISTS items (
 
 insert into items (item_id, item_name, weight) values
 (1, '神アイテム', 5),
-(2, '激レアアイテム', 10),
-(3, 'レアアイテム', 25),
+(2, '激レアアイテム', 8),
+(3, 'レアアイテム', 20),
 (4, '普通のアイテム', 30),
 (5, 'ゴミアイテム', 56);
 
-CREATE TABLE $items_user_0 (
+CREATE TABLE items_user_0 (
             item_id INT PRIMARY KEY,
             item_name VARCHAR(255) CHARACTER SET utf8mb4,
             item_count INT DEFAULT 0,
         );
+DELETE FROM items_user_0;

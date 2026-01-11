@@ -39,8 +39,7 @@ if (isset($_POST['create_user'])) {
         CREATE TABLE $tableName (
             item_id INT PRIMARY KEY,
             item_name VARCHAR(255) CHARACTER SET utf8mb4,
-            item_count INT DEFAULT 0,
-            weight INT DEFAULT 1
+            item_count INT DEFAULT 0
         );
         ";
         $pdo->exec($sql);
