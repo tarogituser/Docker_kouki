@@ -4,7 +4,7 @@ require 'common.php';
 try
 {
     // アイテム情報の取得
-    $stmt = $pdo->query("SELECT item_id, item_name, weight FROM items");
+    $stmt = $pdo->query("SELECT item_id, item_name, attack, defense, weight FROM items");
     // 取得したデータをセッションに保存
     $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
@@ -67,8 +67,10 @@ for ($i = 0; $i < 10; $i++){
 
     if (!$existingItem){
         // テーブルにアイテム追加
-        $stmt = $pdo->prepare("INSERT INTO $tableName (item_id, item_name) VALUES (:id, :name)");
-        $stmt->execute([':id' => $item['item_id'], ':name' => $item['item_name']]);
+        $stmt = $pdo->prepare("INSERT INTO $tableName (item_id, item_name, attack, defense) 
+        VALUES (:id, :name, :attack, :defense)");
+        $stmt->execute([':id' => $item['item_id'], ':name' => $item['item_name'],
+        ':attack' => $item['attack'], ':defense' => $item['defense']]);
     }
 
     // 所持数を増やす

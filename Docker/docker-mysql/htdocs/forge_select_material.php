@@ -1,24 +1,24 @@
 <?php
 require 'common.php';
-    try
-    {
-      // 作成された user_id を取得
-      $userId = $_SESSION['user_id'];
-      // ユーザー専用 items テーブル名
-      $tableName = "items_user_" . intval($userId);
+try
+{
+  // 作成された user_id を取得
+  $userId = $_SESSION['user_id'];
+  // ユーザー専用 items テーブル名
+  $tableName = "items_user_" . intval($userId);
 
-      $target_id = $_GET['target_item_id'];
-      $base_id = $_GET['base_item_id'];
+  $target_id = $_GET['target_item_id'];
+  $base_id = $_GET['base_item_id'];
 
-      // データの取得
-      $items = $pdo->prepare("SELECT * FROM $tableName WHERE item_count > 0 AND item_id NOT IN (?, ?)");
-      $items->execute([$target_id, $base_id]);
-    }
-    catch(PDOException $e)
-    {
-      echo "データベースエラー: " . $e->getMessage();
-      exit();
-    }
+  // データの取得
+  $items = $pdo->prepare("SELECT * FROM $tableName WHERE item_count > 0 AND item_id NOT IN (?, ?)");
+  $items->execute([$target_id, $base_id]);
+}
+catch(PDOException $e)
+{
+  echo "データベースエラー: " . $e->getMessage();
+  exit();
+}
 
 $title = "素材選択";
 require_once 'header.php';

@@ -39,6 +39,8 @@ if (isset($_POST['create_user'])) {
         CREATE TABLE $tableName (
             item_id INT PRIMARY KEY,
             item_name VARCHAR(255) CHARACTER SET utf8mb4,
+            attack INT DEFAULT 1,
+            defense INT DEFAULT 1,
             item_count INT DEFAULT 0
         );
         ";
@@ -73,6 +75,7 @@ require_once 'header.php';
     <ul>
       <li><a href="forge_entrance.php">アイテム強化</a></li>
       <li><a href="gacha.php">10連ガチャ</a></li>
+      <li><a href="disp_items.php">所持アイテム確認</a></li>
     </ul>
   </body>
 

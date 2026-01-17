@@ -21,19 +21,24 @@ DROP TABLE items;
 CREATE TABLE IF NOT EXISTS items (
     item_id INT PRIMARY KEY,
     item_name VARCHAR(255) CHARACTER SET utf8mb4,
+    attack INT DEFAULT 1,
+    defense INT DEFAULT 1,
     weight INT DEFAULT 1
 );
 
-insert into items (item_id, item_name, weight) values
-(1, '神アイテム', 5),
-(2, '激レアアイテム', 8),
-(3, 'レアアイテム', 20),
-(4, '普通のアイテム', 30),
-(5, 'ゴミアイテム', 56);
+insert into items (item_id, item_name, attack, defense, weight) values
+(1, '神アイテム', 300, 210, 5),
+(2, '激レアアイテム', 240, 100, 8),
+(3, 'レアアイテム', 205, 60, 15),
+(4, '普通のアイテム', 80, 35, 30),
+(5, 'ゴミアイテム', 30, 10, 42);
 
 CREATE TABLE items_user_0 (
             item_id INT PRIMARY KEY,
             item_name VARCHAR(255) CHARACTER SET utf8mb4,
+            attack INT DEFAULT 1,
+            defense INT DEFAULT 1,
             item_count INT DEFAULT 0,
         );
 DELETE FROM items_user_0;
+DROP TABLE IF EXISTS items_user_0;
