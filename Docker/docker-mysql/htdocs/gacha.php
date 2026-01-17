@@ -1,5 +1,5 @@
 <?php
-require 'common.php';
+require_once 'common.php';
 $title = "10連ガチャ";
 require_once 'header.php';
 ?>
@@ -15,11 +15,11 @@ require_once 'header.php';
     <h1>ガチャシミュレーション</h1>
 
     <form action="gacha_result.php" method="post">
-        <button type="submit" name="gacha_start">10連ガチャを開始</button>
+        <button type="submit" style="width: 200px; padding: 5px" name="gacha_start">10連ガチャを開始</button>
     </form><br>
 
     <form action="menu.php" method="post">
-        <button type="submit" name="gacha_start">メニュー画面</button>
+        <button type="submit" style="width: 200px; padding: 5px" name="gacha_start">メニュー画面</button>
     </form>
   </body>
 </html>

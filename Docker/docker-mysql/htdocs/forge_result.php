@@ -1,6 +1,5 @@
 <?php
-require 'common.php';
-require_once 'header.php';
+require_once 'common.php';
 
 // 作成された user_id を取得
 $userId = $_SESSION['user_id'];
@@ -53,6 +52,8 @@ if ($success) {
 
 $pdo->commit();
 
+$message = "10連ガチャ結果画面";
+require_once 'header.php';
 ?>
 
 <!DOCTYPE html>

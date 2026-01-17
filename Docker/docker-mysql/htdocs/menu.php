@@ -1,5 +1,5 @@
 <?php
-  require 'common.php';
+  require_once 'common.php';
 
   $title = "メニュー画面";
   $message = "";
@@ -76,6 +76,7 @@ require_once 'header.php';
       <li><a href="forge_entrance.php">アイテム強化</a></li>
       <li><a href="gacha.php">10連ガチャ</a></li>
       <li><a href="disp_items.php">所持アイテム確認</a></li>
+      <li><a href="battle_entrance.php">対戦</a></li>
     </ul>
   </body>
 

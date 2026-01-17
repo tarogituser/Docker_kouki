@@ -45,14 +45,14 @@ require_once 'header.php';
     </ul><br>
 
     <form action="menu.php" method="post">
-          <button type="submit" name="back">メニュー画面</button>
+          <button type="submit" style="width: 200px; padding: 5px" name="back">メニュー画面</button>
     </form>
   
   <?php else: ?>
     <p style="color: gray;">アイテムがありません。</p><br>
 
     <form action="menu.php" method="post">
-          <button type="submit" name="back">メニュー画面</button>
+          <button type="submit" style="width: 200px; padding: 5px" name="back">メニュー画面</button>
     </form>
 
   <?php endif; ?>

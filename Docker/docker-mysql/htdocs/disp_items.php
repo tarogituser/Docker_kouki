@@ -1,5 +1,5 @@
 <?php
-require 'common.php';
+require_once 'common.php';
 
 try
 {
@@ -39,23 +39,21 @@ require_once 'header.php';
     <ul>
       <?php foreach($items as $item): ?>
         <li>
-            <a>
-                <?= htmlspecialchars($item['item_name'], ENT_QUOTES) ?>
+            <?= htmlspecialchars($item['item_name'], ENT_QUOTES) ?>
                 （所持数：<?= $item['item_count'] ?> 攻撃: <?= $item['attack'] ?> 防御 <?= $item['defense'] ?>）
-            </a>
         </li>
       <?php endforeach; ?>
     </ul><br>
 
     <form action="menu.php" method="post">
-          <button type="submit" name="back">メニュー画面</button>
+          <button type="submit" style="width: 200px; padding: 5px" name="back">メニュー画面</button>
     </form>
   
   <?php else: ?>
     <p style="color: gray;">アイテムがありません。</p><br>
 
     <form action="menu.php" method="post">
-          <button type="submit" name="back">メニュー画面</button>
+          <button type="submit" style="width: 200px; padding: 5px" name="back">メニュー画面</button>
     </form>
 
   <?php endif; ?>

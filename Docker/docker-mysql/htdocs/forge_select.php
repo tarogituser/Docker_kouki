@@ -1,5 +1,5 @@
 <?php
-require 'common.php';
+require_once 'common.php';
     try
     {
       // 作成された user_id を取得
