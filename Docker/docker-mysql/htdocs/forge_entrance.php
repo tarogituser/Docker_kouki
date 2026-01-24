@@ -28,7 +28,7 @@ require_once 'header.php';
   <title>選択画面</title>
 </head>
 <body>
-  <h1>強化アイテムを選択</h1>
+  <h1 style="padding: 10px;">強化アイテムを選択</h1>
 
   <?php if (count($items) > 0): ?>
     <p style="color: gray;">強化に使用するアイテムを選択してください</p>

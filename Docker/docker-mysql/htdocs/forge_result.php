@@ -63,7 +63,7 @@ require_once 'header.php';
   <title>結果画面</title>
 </head>
 <body>
-  <h1 style="color: cyan">強化結果</h1>
+  <h1 style="color: cyan; padding: 10px;">強化結果</h1>
 
   <p>
     <?php if ($success): ?>

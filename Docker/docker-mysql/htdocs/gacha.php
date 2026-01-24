@@ -12,7 +12,7 @@ require_once 'header.php';
   </head>
   <body>
     <meta charset="UTF-8">
-    <h1>ガチャシミュレーション</h1>
+    <h1 style="padding: 10px;">ガチャシミュレーション</h1>
 
     <form action="gacha_result.php" method="post">
         <button type="submit" style="width: 200px; padding: 5px" name="gacha_start">10連ガチャを開始</button>

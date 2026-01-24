@@ -18,6 +18,7 @@ CREATE TABLE IF NOT EXISTS users (
 );
 
 DROP TABLE items;
+DELETE FROM items;
 CREATE TABLE IF NOT EXISTS items (
     item_id INT PRIMARY KEY,
     item_name VARCHAR(255) CHARACTER SET utf8mb4,

@@ -32,7 +32,7 @@
     <?php if (isset($_SESSION['user_name'])): ?>
       ユーザー名：<?= htmlspecialchars($_SESSION['user_name'])?>
       <form action="menu.php" method="post" style="display:inline;">
-        <button type="submit" name="delete_user">ユーザー削除</button>
+        <button type="submit" name="exit">終了</button>
       </form>
     <?php else: ?>
       ユーザーが設定されていません

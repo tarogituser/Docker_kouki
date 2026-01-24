@@ -31,7 +31,7 @@ require_once 'header.php';
   <title>素材アイテム選択画面</title>
 </head>
 <body>
-  <h1 style="color: gold">素材アイテムを選択</h1>
+  <h1 style="color: gold; padding: 10px;">素材アイテムを選択</h1>
 
   <p style="color: gray;">強化の素材として使用するアイテムを選択してください</p>
   <p1 style="color: red;">(強化アイテムID : <?= $target_id ?>)</p1>
